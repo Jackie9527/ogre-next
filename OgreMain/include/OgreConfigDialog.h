@@ -52,6 +52,8 @@ THE SOFTWARE.
 #    include "iOS/OgreConfigDialogImp.h"
 #elif OGRE_PLATFORM == OGRE_PLATFORM_ANDROID
 #    include "Android/OgreConfigDialogImp.h"
+#elif OGRE_PLATFORM == OGRE_PLATFORM_OHOS
+#    include "OHOS/OgreConfigDialogImp.h"
 #elif OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN || defined( OGRE_CONFIG_UNIX_NO_X11 )
 #    include "Emscripten/OgreConfigDialogImp.h"
 #endif

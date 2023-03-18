@@ -45,7 +45,7 @@ namespace Ogre
         mBufferSize( 0 ),
         mExtraBufferParams( extraBufferParams ),
         _mVaoManager( 0 ),
-#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE_IOS && OGRE_PLATFORM != OGRE_PLATFORM_ANDROID
+#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE_IOS && OGRE_PLATFORM != OGRE_PLATFORM_ANDROID && OGRE_PLATFORM != OGRE_PLATFORM_OHOS
         mOptimizationStrategy( LowerCpuOverhead )
 #else
         mOptimizationStrategy( LowerGpuOverhead )

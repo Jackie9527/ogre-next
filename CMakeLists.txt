@@ -36,7 +36,7 @@ if(WIN32)
   set(CMAKE_SUPPRESS_REGENERATION true)
 endif()
 
-if (APPLE AND NOT ANDROID)
+if (APPLE AND NOT ANDROID AND NOT OHOS)
   if(CMAKE_VERSION VERSION_LESS 3.0.0)
     include(CMakeForceCompiler)
     CMAKE_FORCE_C_COMPILER(clang GNU)
@@ -75,7 +75,7 @@ set(CMAKE_MODULE_PATH
   "${OGRE_SOURCE_DIR}/CMake/Packages"
 )
 
-if(ANDROID)
+if(ANDROID OR OHOS)
   set(CMAKE_FIND_ROOT_PATH ${OGRE_DEPENDENCIES_DIR} "${CMAKE_FIND_ROOT_PATH}")
 endif()
 
@@ -270,7 +270,7 @@ if ((CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANGXX) AND NOT MINGW)
 endif ((CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANGXX) AND NOT MINGW)
 
 # determine system endianess
-if (MSVC OR ANDROID OR EMSCRIPTEN)
+if (MSVC OR ANDROID OR EMSCRIPTEN OR OHOS)
   # This doesn't work on VS 2010
   # MSVC only builds for intel anyway
   set(OGRE_TEST_BIG_ENDIAN FALSE)
@@ -373,6 +373,24 @@ elseif (ANDROID)
   set(OGRE_SIMD FALSE CACHE BOOL "Disable SIMD on Android" FORCE)
   set(OGRE_RESTRICT_ALIASING FALSE CACHE BOOL "Disable strict aliasing on Android" FORCE)
   string (REPLACE "-msse2" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+elseif (OHOS)
+  set(TargetPlatform "OHOS")
+  set(OGRE_PLATFORM OGRE_PLATFORM_OHOS)
+  set(OGRE_CONFIG_ENABLE_VIEWPORT_ORIENTATIONMODE TRUE CACHE BOOL "Enable viewport orientation OHOS" FORCE)
+
+  if( NOT OHOS_GLES_ONLY )
+   set(OGRE_CONFIG_ENABLE_GLES2_VAO_SUPPORT FALSE CACHE BOOL "Disable VAO on OHOS" FORCE)
+  else()
+   set(OGRE_BUILD_COMPONENT_VOLUME FALSE CACHE BOOL "Disable volume component on OHOS ES1" FORCE)
+   set(OGRE_BUILD_COMPONENT_PAGING FALSE CACHE BOOL "Disable paging component on OHOS ES1" FORCE)
+  endif()
+
+  set(OGRE_BUILD_TESTS FALSE CACHE BOOL "Disable tests on OHOS" FORCE)
+  set(OGRE_BUILD_TOOLS FALSE CACHE BOOL "Disable tools on OHOS" FORCE)
+  set(OGRE_STATIC TRUE CACHE BOOL "Forcing static build for OHOS" FORCE)
+  set(OGRE_SIMD FALSE CACHE BOOL "Disable SIMD on OHOS" FORCE)
+  set(OGRE_RESTRICT_ALIASING FALSE CACHE BOOL "Disable strict aliasing on OHOS" FORCE)
+  string (REPLACE "-msse2" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 elseif(EMSCRIPTEN)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-c++11-extensions")
   add_definitions(-DEMSCRIPTEN=1 -D__EMSCRIPTEN__=1)
@@ -470,7 +488,7 @@ cmake_dependent_option(OGRE_BUILD_RENDERSYSTEM_GLES2 "Build OpenGL ES 2.x Render
 cmake_dependent_option(OGRE_BUILD_RENDERSYSTEM_VULKAN "Build Vulkan RenderSystem" TRUE "Vulkan_FOUND" FALSE)
 cmake_dependent_option(OGRE_VULKAN_WINDOW_NULL "Allow headless support. If more than one OGRE_VULKAN_WINDOW is enabled, interface can be selected at runtime" FALSE "OGRE_BUILD_RENDERSYSTEM_VULKAN" FALSE)
 cmake_dependent_option(OGRE_VULKAN_WINDOW_WIN32 "Use Win32 (Default / Native window). If more than one OGRE_VULKAN_WINDOW is enabled, interface can be selected at runtime" TRUE "OGRE_BUILD_RENDERSYSTEM_VULKAN;WIN32" FALSE)
-cmake_dependent_option(OGRE_VULKAN_WINDOW_XCB "Use X11 / xcb (Default / Native window). If more than one OGRE_VULKAN_WINDOW is enabled, interface can be selected at runtime" TRUE "OGRE_BUILD_RENDERSYSTEM_VULKAN;UNIX;NOT ANDROID;NOT OGRE_CONFIG_UNIX_NO_X11" FALSE)
+cmake_dependent_option(OGRE_VULKAN_WINDOW_XCB "Use X11 / xcb (Default / Native window). If more than one OGRE_VULKAN_WINDOW is enabled, interface can be selected at runtime" TRUE "OGRE_BUILD_RENDERSYSTEM_VULKAN;UNIX;NOT ANDROID;NOT OHOS;NOT OGRE_CONFIG_UNIX_NO_X11" FALSE)
 cmake_dependent_option(OGRE_VULKAN_WINDOW_ANDROID "Use Android (Default / 'ANative' window). If more than one OGRE_VULKAN_WINDOW is enabled, interface can be selected at runtime" TRUE "OGRE_BUILD_RENDERSYSTEM_VULKAN;ANDROID" FALSE)
 if( OGRE_BUILD_RENDERSYSTEM_VULKAN AND OGRE_CONFIG_UNIX_NO_X11 )
 	set(OGRE_VULKAN_WINDOW_NULL ON CACHE BOOL "Forced on due to OGRE_CONFIG_UNIX_NO_X11" FORCE)

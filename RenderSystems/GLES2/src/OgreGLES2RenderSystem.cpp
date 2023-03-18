@@ -66,13 +66,16 @@ THE SOFTWARE.
 #elif OGRE_PLATFORM == OGRE_PLATFORM_ANDROID
 #   include "OgreAndroidEGLWindow.h"
 #   include "OgreAndroidEGLContext.h"
+#elif OGRE_PLATFORM == OGRE_PLATFORM_OHOS
+#   include "OgreOHOSEGLWindow.h"
+#   include "OgreOHOSEGLContext.h"
 #elif OGRE_PLATFORM == OGRE_PLATFORM_NACL
 #   include "OgreNaClWindow.h"
 #else
 #   include "OgreEGLWindow.h"
 #endif
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN
+#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN || OGRE_PLATFORM == OGRE_PLATFORM_OHOS
 #   include "OgreGLES2ManagedResourceManager.h"
 Ogre::GLES2ManagedResourceManager* Ogre::GLES2RenderSystem::mResourceManager = NULL;
 #endif
@@ -108,7 +111,7 @@ namespace Ogre {
         mRenderInstanceAttribsBound.reserve(100);
 #endif
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN
+#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN || OGRE_PLATFORM == OGRE_PLATFORM_OHOS
         mResourceManager = OGRE_NEW GLES2ManagedResourceManager();
 #endif
         
@@ -151,7 +154,7 @@ namespace Ogre {
         OGRE_DELETE mGLSupport;
         mGLSupport = 0;
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN
+#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN || OGRE_PLATFORM == OGRE_PLATFORM_OHOS
         if (mResourceManager != NULL)
         {
             OGRE_DELETE mResourceManager;
@@ -359,7 +362,7 @@ namespace Ogre {
         rsc->setVertexTextureUnitsShared(true);
 
         // Check for non-power-of-2 texture support
-#if OGRE_PLATFORM != OGRE_PLATFORM_ANDROID && OGRE_PLATFORM != OGRE_PLATFORM_EMSCRIPTEN
+#if OGRE_PLATFORM != OGRE_PLATFORM_ANDROID && OGRE_PLATFORM != OGRE_PLATFORM_EMSCRIPTEN && OGRE_PLATFORM != OGRE_PLATFORM_OHOS
         if(hasMinGLVersion(3, 0) || checkExtension("GL_OES_texture_npot") || checkExtension("GL_ARB_texture_non_power_of_two"))
         {
             rsc->setCapability(RSC_NON_POWER_OF_2_TEXTURES);
@@ -860,7 +863,7 @@ namespace Ogre {
 
         if (enabled)
         {
-#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN
+#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN || OGRE_PLATFORM == OGRE_PLATFORM_OHOS
             mCurTexMipCount = 0;
 #endif
             GLuint texID =  0;
@@ -870,7 +873,7 @@ namespace Ogre {
                 tex->touch();
                 mTextureTypes[stage] = tex->getGLES2TextureTarget();
                 texID = tex->getGLID();
-#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN
+#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN || OGRE_PLATFORM == OGRE_PLATFORM_OHOS
                 mCurTexMipCount = tex->getNumMipmaps();
 #endif
             }
@@ -2882,7 +2885,7 @@ namespace Ogre {
            glInsertEventMarkerEXT(0, eventName.c_str());
     }
     //---------------------------------------------------------------------
-#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN
+#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN || OGRE_PLATFORM == OGRE_PLATFORM_OHOS
     void GLES2RenderSystem::resetRenderer(RenderWindow* win)
     {
         LogManager::getSingleton().logMessage("********************************************");

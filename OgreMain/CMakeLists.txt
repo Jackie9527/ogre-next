@@ -227,6 +227,13 @@ elseif(ANDROID)
       src/OgreSearchOps.cpp)
 
   set(PLATFORM_HEADER_INSTALL "Android")
+elseif(OHOS)
+
+  file(GLOB PLATFORM_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/include/OHOS/*.h")
+  file(GLOB PLATFORM_SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/OHOS/*.cpp"
+      src/OgreSearchOps.cpp)
+
+  set(PLATFORM_HEADER_INSTALL "OHOS")
 elseif (UNIX)
 	if( NOT OGRE_CONFIG_UNIX_NO_X11 )
 		include_directories(include/GLX ${X11_INCLUDE_DIR})

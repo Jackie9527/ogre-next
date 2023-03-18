@@ -481,7 +481,7 @@ namespace Ogre {
         mTextureID = 0;
     }
     
-#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN
+#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN || OGRE_PLATFORM == OGRE_PLATFORM_OHOS
     void GLES2Texture::notifyOnContextLost()
     {
         if (!mIsManual) 

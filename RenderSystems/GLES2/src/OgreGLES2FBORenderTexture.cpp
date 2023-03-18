@@ -75,7 +75,7 @@ namespace Ogre {
         GLES2RenderTexture::swapBuffers();
     }
     
-#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN
+#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN || OGRE_PLATFORM == OGRE_PLATFORM_OHOS
     void GLES2FBORenderTexture::notifyOnContextLost()
     {
         mFB.notifyOnContextLost();
@@ -367,7 +367,7 @@ namespace Ogre {
             GLenum originFormat = GLES2PixelUtil::getGLOriginFormat((PixelFormat)x, false);
             GLenum dataType = GLES2PixelUtil::getGLOriginDataType((PixelFormat)x);
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID
+#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_OHOS
             if(internalFormat == GL_NONE || originFormat == GL_NONE || dataType == GL_NONE)
                 continue;
 #else

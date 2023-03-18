@@ -45,6 +45,15 @@ elseif(OGRE_BUILD_PLATFORM_ANDROID)
     "${OGRE_BINARY_DIR}/../DependenciesAndroid"
     "${OGRE_SOURCE_DIR}/../DependenciesAndroid"
   )
+elseif(OGRE_BUILD_PLATFORM_OHOS)
+  set(OGRE_DEP_SEARCH_PATH 
+    ${OGRE_DEPENDENCIES_DIR}
+    ${ENV_OGRE_DEPENDENCIES_DIR}
+    "${OGRE_BINARY_DIR}/DependenciesOHOS"
+    "${OGRE_SOURCE_DIR}/DependenciesOHOS"
+    "${OGRE_BINARY_DIR}/../DependenciesOHOS"
+    "${OGRE_SOURCE_DIR}/../DependenciesOHOS"
+  )
 else()
   set(OGRE_DEP_SEARCH_PATH 
     ${OGRE_DEPENDENCIES_DIR}
@@ -95,7 +104,7 @@ find_package(Vulkan)
 macro_log_feature(Vulkan_FOUND "vulkan-sdk" "Vulkan SDK" "https://vulkan.lunarg.com/" FALSE "" "")
 
 # Find X11
-if (UNIX AND NOT APPLE AND NOT ANDROID AND NOT EMSCRIPTEN)
+if (UNIX AND NOT APPLE AND NOT ANDROID AND NOT EMSCRIPTEN AND NOT OHOS)
   find_package(X11)
   macro_log_feature(X11_FOUND "X11" "X Window system" "http://www.x.org" TRUE "" "")
   macro_log_feature(X11_Xt_FOUND "Xt" "X Toolkit" "http://www.x.org" TRUE "" "")
@@ -117,7 +126,7 @@ macro_log_feature(RenderDoc_FOUND "RenderDoc" "RenderDoc Integration" "https://r
 #######################################################################
 
 # Find OpenGL
-if(NOT ANDROID AND NOT EMSCRIPTEN)
+if(NOT ANDROID AND NOT EMSCRIPTEN AND NOT OHOS)
   find_package(OpenGL)
   macro_log_feature(OPENGL_FOUND "OpenGL" "Support for the OpenGL render system" "http://www.opengl.org/" FALSE "" "")
 endif()

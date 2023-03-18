@@ -47,6 +47,9 @@ THE SOFTWARE.
     #include <linux/sysctl.h>
     #include <cpu-features.h>
 #endif
+#if OGRE_PLATFORM == OGRE_PLATFORM_OHOS
+    #include <linux/sysctl.h>
+#endif
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE || OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
     #include <sys/sysctl.h>
     #include <mach/machine.h>

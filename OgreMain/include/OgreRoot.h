@@ -36,6 +36,9 @@ THE SOFTWARE.
 #if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID
 #    include "Android/OgreAndroidLogListener.h"
 #endif
+#if OGRE_PLATFORM == OGRE_PLATFORM_OHOS
+#    include "OHOS/OgreOHOSLogListener.h"
+#endif
 
 #include "ogrestd/deque.h"
 
@@ -104,6 +107,9 @@ namespace Ogre
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID
         AndroidLogListener *mAndroidLogger;
+#endif
+#if OGRE_PLATFORM == OGRE_PLATFORM_OHOS
+        OHOSLogListener *mOHOSLogger;
 #endif
 
         ResourceGroupManager            *mResourceGroupManager;

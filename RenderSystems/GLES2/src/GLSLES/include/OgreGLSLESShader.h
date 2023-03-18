@@ -179,7 +179,7 @@ namespace Ogre {
 
         virtual void setUniformBlockBinding( const char *blockName, uint32 bindingSlot );
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN
+#if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN || OGRE_PLATFORM == OGRE_PLATFORM_OHOS
         /** See AndroidResource. */
         virtual void notifyOnContextLost();
 #endif

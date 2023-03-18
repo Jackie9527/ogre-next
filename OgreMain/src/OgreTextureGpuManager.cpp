@@ -112,7 +112,7 @@ namespace Ogre
         mEntriesToProcessPerIteration( 3u ),
         mMaxPreloadBytes( 256u * 1024u * 1024u ),  // A value of 512MB begins to shake driver bugs.
         mTextureGpuManagerListener( &sDefaultTextureGpuManagerListener ),
-#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE_IOS && OGRE_PLATFORM != OGRE_PLATFORM_ANDROID && \
+#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE_IOS && OGRE_PLATFORM != OGRE_PLATFORM_ANDROID && OGRE_PLATFORM != OGRE_PLATFORM_OHOS && \
     OGRE_ARCH_TYPE != OGRE_ARCHITECTURE_32
         mStagingTextureMaxBudgetBytes( 256u * 1024u * 1024u ),
 #else
@@ -130,7 +130,7 @@ namespace Ogre
         memset( mErrorFallbackTexData, 0, sizeof( mErrorFallbackTexData ) );
 
         PixelFormatGpu format;
-#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE_IOS && OGRE_PLATFORM != OGRE_PLATFORM_ANDROID
+#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE_IOS && OGRE_PLATFORM != OGRE_PLATFORM_ANDROID && OGRE_PLATFORM != OGRE_PLATFORM_OHOS
 #    if OGRE_ARCH_TYPE == OGRE_ARCHITECTURE_32
         // 32-bit have tighter limited addresse memory. They pay the price
         // in slower streaming (more round trips between main and worker threads)
@@ -163,7 +163,7 @@ namespace Ogre
         // Sort in descending order.
         std::sort( mBudget.begin(), mBudget.end(), BudgetEntry() );
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS || OGRE_PLATFORM == OGRE_PLATFORM_ANDROID
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS || OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_OHOS
         // Mobile platforms are tight on memory. Keep the limits low.
         mMaxPreloadBytes = 32u * 1024u * 1024u;
 #else
